@@ -1,0 +1,9 @@
+# Raw Land Registry files (about 1 GB) and the database built from them
+data/
+housing.duckdb
+housing.duckdb.wal
+
+# Rebuilt from sql/02_north_east.sql
+output/ne_sales.csv
+
+.DS_Store
