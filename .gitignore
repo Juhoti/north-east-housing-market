@@ -7,3 +7,6 @@ housing.duckdb.wal
 output/ne_sales.csv
 
 .DS_Store
+
+# Excel lock files, present while a workbook is open
+~$*

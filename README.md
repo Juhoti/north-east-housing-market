@@ -9,7 +9,7 @@ The analysis uses HM Land Registry Price Paid Data for the twelve North East cou
 | Phase | Tool | Status |
 |---|---|---|
 | 1. Data preparation | SQL (DuckDB) | Complete |
-| 2. Analysis and comparison with ONS earnings | Excel | Planned |
+| 2. Analysis and comparison with ONS earnings | Excel | In progress |
 | 3. Interactive dashboard | Tableau Public | Planned |
 | 4. Summary and slides for non-technical readers | Word, PowerPoint | Planned |
 
@@ -45,6 +45,19 @@ The twelve council areas are County Durham, Darlington, Gateshead, Hartlepool, M
 
 The Land Registry adds late-registered sales to earlier yearly files, so files downloaded at a later date may give slightly different counts. The figures above come from files downloaded on 30 October 2026.
 
+## Phase 2: Excel analysis (in progress)
+
+[`ne_housing.xlsx`](ne_housing.xlsx) holds the 235,417 North East sales as an Excel Table named `Sales`, with:
+
+- readable labels for property type and new build status, added with `VLOOKUP` against two small tables on the `Lookups` sheet
+- a `within_budget` column: 1 if the price is at or below the first-time-buyer budget on the `Inputs` sheet (currently £130,000), otherwise 0
+- three pivot tables by council area and year: number of sales, average price, and share of sales within budget (with a property type filter)
+
+### Checks
+
+- The sales-count pivot totals 235,417 and matches [`output/counts_by_district_year.csv`](output/counts_by_district_year.csv) cell by cell.
+- 82,999 sales (35.3%) are at or below £130,000 in both Excel and DuckDB.
+
 ## Reproducing
 
 Requires [DuckDB](https://duckdb.org) and `curl`.
@@ -70,6 +83,7 @@ duckdb housing.duckdb -c "COPY (SELECT district, sale_year, count(*) AS sales FR
 | `sql/01_load_sales.sql` | Loads the six yearly files into a `sales` table with named columns |
 | `sql/02_north_east.sql` | Builds `ne_sales`: North East standard sales of homes at £20,000 or more |
 | `output/counts_by_district_year.csv` | Sales per council area per year, used as a completeness check |
+| `ne_housing.xlsx` | Phase 2 workbook: lookups, budget flag and pivot tables |
 
 ## Licence
 
