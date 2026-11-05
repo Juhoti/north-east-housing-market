@@ -51,12 +51,17 @@ The Land Registry adds late-registered sales to earlier yearly files, so files d
 
 - readable labels for property type and new build status, added with `VLOOKUP` against two small tables on the `Lookups` sheet
 - a `within_budget` column: 1 if the price is at or below the first-time-buyer budget on the `Inputs` sheet (currently £130,000), otherwise 0
-- three pivot tables by council area and year: number of sales, average price, and share of sales within budget (with a property type filter)
+- three pivot tables by council area and year: number of sales, average price, and share of sales within budget (with a property type filter, a colour scale and a line chart)
+- median price by council area and year on the `Medians` sheet, using `MEDIAN(FILTER(...))` because pivot tables cannot calculate a median
+- ONS lower-quartile earnings on the `Earnings` sheet, matched with `VLOOKUP` to give the years of earnings needed to buy the median home (`Years Of Earnings` sheet)
+- a comparison of the 2025 figures with the ONS lower-quartile ratios (`Sense Check` sheet)
 
 ### Checks
 
 - The sales-count pivot totals 235,417 and matches [`output/counts_by_district_year.csv`](output/counts_by_district_year.csv) cell by cell.
 - 82,999 sales (35.3%) are at or below £130,000 in both Excel and DuckDB.
+- All 72 medians and all 72 years-of-earnings figures match DuckDB.
+- The 2025 years-of-earnings figures rank the twelve areas in a similar order to the ONS lower-quartile ratios: correlation 0.92, with 11 of 12 areas within one rank place and a largest gap of two places (Gateshead). The values differ because ONS divides the lower-quartile price for the year to September by lower-quartile earnings, while this analysis divides the calendar-year median price by the same earnings.
 
 ## Reproducing
 
@@ -83,8 +88,10 @@ duckdb housing.duckdb -c "COPY (SELECT district, sale_year, count(*) AS sales FR
 | `sql/01_load_sales.sql` | Loads the six yearly files into a `sales` table with named columns |
 | `sql/02_north_east.sql` | Builds `ne_sales`: North East standard sales of homes at £20,000 or more |
 | `output/counts_by_district_year.csv` | Sales per council area per year, used as a completeness check |
-| `ne_housing.xlsx` | Phase 2 workbook: lookups, budget flag and pivot tables |
+| `ne_housing.xlsx` | Phase 2 workbook: lookups, budget flag, pivot tables, medians, earnings ratios and the ONS comparison |
 
 ## Licence
 
 Contains HM Land Registry data © Crown copyright and database right 2026. This data is licensed under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+
+Earnings and affordability ratios: source Office for National Statistics, licensed under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
