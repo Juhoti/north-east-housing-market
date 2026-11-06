@@ -9,7 +9,7 @@ The analysis uses HM Land Registry Price Paid Data for the twelve North East cou
 | Phase | Tool | Status |
 |---|---|---|
 | 1. Data preparation | SQL (DuckDB) | Complete |
-| 2. Analysis and comparison with ONS earnings | Excel | In progress |
+| 2. Analysis and comparison with ONS earnings | Excel | Complete |
 | 3. Interactive dashboard | Tableau Public | Planned |
 | 4. Summary and slides for non-technical readers | Word, PowerPoint | Planned |
 
@@ -45,7 +45,7 @@ The twelve council areas are County Durham, Darlington, Gateshead, Hartlepool, M
 
 The Land Registry adds late-registered sales to earlier yearly files, so files downloaded at a later date may give slightly different counts. The figures above come from files downloaded on 30 October 2026.
 
-## Phase 2: Excel analysis (in progress)
+## Phase 2: Excel analysis
 
 [`ne_housing.xlsx`](ne_housing.xlsx) holds the 235,417 North East sales as an Excel Table named `Sales`, with:
 
@@ -55,6 +55,19 @@ The Land Registry adds late-registered sales to earlier yearly files, so files d
 - median price by council area and year on the `Medians` sheet, using `MEDIAN(FILTER(...))` because pivot tables cannot calculate a median
 - ONS lower-quartile earnings on the `Earnings` sheet, matched with `VLOOKUP` to give the years of earnings needed to buy the median home (`Years Of Earnings` sheet)
 - a comparison of the 2025 figures with the ONS lower-quartile ratios (`Sense Check` sheet)
+
+### Finding
+
+A budget of £130,000 would only cover 30% of homes sold in 2025 compared to 41% in 2020, meaning the same money now buys less across the North East. The district of Redcar and Cleveland saw the biggest decrease (47% down to 30%), while semi-detached houses were impacted the most out of any type, going from 41% down to 21%. However, in 11 out of the 12 North East districts, pay for lower-paid full-time workers rose faster than typical house prices, meaning these homes now take fewer years of pay to buy.
+
+### Budget assumption
+
+The £130,000 budget is for a lower-paid full-time worker on about £27,000 a year. A 10% deposit of £13,000 leaves a mortgage of about £117,000, around 4.3 times salary. Lenders commonly cap borrowing at about 4.5 times salary.
+
+### Limits
+
+- Years of earnings compares price with pay only. It does not reflect mortgage interest rates, which were much higher in 2025 than in 2020.
+- ONS earnings are gross pay for full-time workers, measured where they work, and the latest year is provisional.
 
 ### Checks
 
