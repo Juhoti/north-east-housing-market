@@ -4,13 +4,15 @@ Where in the North East of England can a first-time buyer still afford a home, a
 
 The analysis uses HM Land Registry Price Paid Data for the twelve North East council areas, 2020 to 2025.
 
+**Interactive dashboard:** [North East Housing on Tableau Public](https://public.tableau.com/app/profile/ryan.knowles7151/viz/NorthEastHousingMarket/NorthEastHousing)
+
 ## Status
 
 | Phase | Tool | Status |
 |---|---|---|
 | 1. Data preparation | SQL (DuckDB) | Complete |
 | 2. Analysis and comparison with ONS earnings | Excel | Complete |
-| 3. Interactive dashboard | Tableau Public | Planned |
+| 3. Interactive dashboard | Tableau Public | Complete |
 | 4. Summary and slides for non-technical readers | Word, PowerPoint | Planned |
 
 ## Data
@@ -75,6 +77,22 @@ The £130,000 budget is for a lower-paid full-time worker on about £27,000 a ye
 - 82,999 sales (35.3%) are at or below £130,000 in both Excel and DuckDB.
 - All 72 medians and all 72 years-of-earnings figures match DuckDB.
 - The 2025 years-of-earnings figures rank the twelve areas in a similar order to the ONS lower-quartile ratios: correlation 0.92, with 11 of 12 areas within one rank place and a largest gap of two places (Gateshead). The values differ because ONS divides the lower-quartile price for the year to September by lower-quartile earnings, while this analysis divides the calendar-year median price by the same earnings.
+
+## Phase 3: Tableau dashboard
+
+The [dashboard](https://public.tableau.com/app/profile/ryan.knowles7151/viz/NorthEastHousingMarket/NorthEastHousing) is built in Tableau Public from `output/ne_sales.csv` and contains:
+
+- a budget slider from £50,000 to £400,000 in £10,000 steps, replacing the fixed budget cell used in Excel
+- a map and a ranked bar chart of the share of 2025 sales at or under the chosen budget, by council area
+- a line chart of the median price by year for each area; selecting an area on the map or bar chart highlights its line
+- a property type filter that applies to all three charts
+
+### Checks
+
+- The data source holds all 235,417 sales.
+- The 2025 shares by council area at £130,000, at £150,000 and for terraced houses at £130,000 match DuckDB.
+- Spot-checked median prices in the line chart match DuckDB and the `Medians` sheet in Excel.
+- A non-technical tester used the dashboard to find where a terraced house could be bought on a £130,000 budget.
 
 ## Reproducing
 
