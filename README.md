@@ -13,7 +13,7 @@ The analysis uses HM Land Registry Price Paid Data for the twelve North East cou
 | 1. Data preparation | SQL (DuckDB) | Complete |
 | 2. Analysis and comparison with ONS earnings | Excel | Complete |
 | 3. Interactive dashboard | Tableau Public | Complete |
-| 4. Summary and slides for non-technical readers | Word, PowerPoint | Planned |
+| 4. Summary and slides for non-technical readers | Word, PowerPoint | Complete |
 
 ## Data
 
@@ -94,6 +94,13 @@ The [dashboard](https://public.tableau.com/app/profile/ryan.knowles7151/viz/Nort
 - Spot-checked median prices in the line chart match DuckDB and the `Medians` sheet in Excel.
 - A non-technical tester used the dashboard to find where a terraced house could be bought on a £130,000 budget.
 
+## Phase 4: summary and slides
+
+Both documents are written for readers with no data background and use "typical price" in place of "median".
+
+- [`NorthEastHousing.pptx`](NorthEastHousing.pptx): a title slide and five slides covering the question, the answer, where a budget goes furthest, what changed since 2020, and what the findings mean and their limits
+- [`North East Housing Market 2020 to 2025.docx`](North%20East%20Housing%20Market%202020%20to%202025.docx): a one-page summary with the question, the answer, three findings, the ONS check and the dashboard link
+
 ## Reproducing
 
 Requires [DuckDB](https://duckdb.org) and `curl`.
@@ -120,6 +127,8 @@ duckdb housing.duckdb -c "COPY (SELECT district, sale_year, count(*) AS sales FR
 | `sql/02_north_east.sql` | Builds `ne_sales`: North East standard sales of homes at £20,000 or more |
 | `output/counts_by_district_year.csv` | Sales per council area per year, used as a completeness check |
 | `ne_housing.xlsx` | Phase 2 workbook: lookups, budget flag, pivot tables, medians, earnings ratios and the ONS comparison |
+| `NorthEastHousing.pptx` | Phase 4 slides for non-technical readers |
+| `North East Housing Market 2020 to 2025.docx` | Phase 4 one-page summary |
 
 ## Licence
 
